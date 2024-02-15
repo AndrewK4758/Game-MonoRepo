@@ -1,0 +1,132 @@
+/* You can add global styles to this file, and also import other style files */
+* {
+  background-color: #101010;
+  color: #ffd300;
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+img {
+  width: 200px;
+  height: auto;
+}
+
+html body #root{
+  height: 100vh;
+  width: 100vw;
+  
+} 
+
+.header {
+  text-align: center;
+  height: fit-content;
+  border-bottom: 1px solid wheat;
+}
+
+.nav-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 160px;
+  z-index: 1;
+  border: 5px double wheat;
+  border-left-color: #101010;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  padding-right: 10px;
+}
+
+.nav-list {
+  height: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+.nav-li {
+  list-style-type: none;
+  border: 2px solid #ffd300;
+  border-radius: 5px;
+  font-size: 2em;
+  text-align: center;
+}
+
+.nav-li:hover {
+  cursor: pointer;
+  background-color: #ffd300;
+  color: #101010;
+}
+
+.home {
+  margin: 25px 0 25px 0;
+  text-align: center;
+}
+
+.home-title {
+  border-bottom: 1px solid wheat;
+}
+
+.games-title {
+  font-size: 2em;
+  padding-left: 220px;
+  text-decoration: underline;
+  margin: 20px 0 5px 0;
+}
+
+.games-ul {
+  list-style-type: square;
+  padding-left: 240px;
+}
+
+.games-li-container {
+  padding-left: 40px;
+}
+
+.games-li, .games-li::marker{
+  font-size: 1.5em;
+  color: #ffd300;
+}
+
+.games-li:hover {
+  cursor: pointer;
+  background-color: #ffd300;
+  color: #101010;
+}
+
+.game-details-name {
+  margin-top: 20px;
+  padding-left: 220px;
+  font-size: 2em;
+  text-decoration: underline;
+}
+
+.game-details-ul {
+  padding-left: 260px;
+  list-style-type: square;
+  margin: 20px 0 5px 0;
+}
+
+.game-details-li-div {
+  padding-left: 20px;
+}
+
+.game-details-title {
+  font-size: 1.5em;
+  text-decoration: underline;
+  margin-bottom: 5px;
+}
+
+.game-details-value-div {
+  padding-left: 20px;
+  font-size: 1.2em;
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  text-align: center;
+}
