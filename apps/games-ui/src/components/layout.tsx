@@ -1,7 +1,7 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { LayoutRouteProps, useNavigate } from 'react-router-dom';
 
-export default function Layout({ children }: any) {
+export default function Layout({ children }: LayoutRouteProps) {
   const nav = useNavigate();
 
   const Header = () => {

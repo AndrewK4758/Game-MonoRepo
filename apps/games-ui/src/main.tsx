@@ -1,12 +1,16 @@
-import { StrictMode } from 'react';
+import React, { StrictMode } from 'react';
 import * as ReactDOM from 'react-dom/client';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
-
-import { getGameDetails, getGameList } from './services/game_service';
+import {
+  getGameDetails,
+  getGameList,
+  getGameInstance,
+} from './services/game_service';
 import Waiting from './components/waiting';
-import PreLoaded from './pages/pre_loaded';
+import GamesList from './pages/pre_loaded';
 import GameDetails from './components/game_details';
 import App from './app';
+import GameInstance from './pages/game_instance';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -16,11 +20,10 @@ const router = createBrowserRouter([
   {
     path: '/',
     Component: App,
-    loader: getGameList,
     children: [
       {
         path: 'games',
-        Component: PreLoaded,
+        Component: GamesList,
         loader: getGameList,
         children: [],
       },
@@ -28,6 +31,11 @@ const router = createBrowserRouter([
         path: `games/:id`,
         Component: GameDetails,
         loader: getGameDetails,
+      },
+      {
+        path: 'games/:id/instances',
+        Component: GameInstance,
+        loader: getGameInstance,
       },
     ],
   },

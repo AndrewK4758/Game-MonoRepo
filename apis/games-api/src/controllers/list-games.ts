@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { GameBuilder, IGame } from '@aklapper/model';
-import ShortUniqueId from 'short-unique-id';
+
+
 
 const gb = new GameBuilder();
 
@@ -70,23 +71,3 @@ export const gameDetails = (req: Request, resp: Response) => {
   resp.json(selectedGameNameAndDetails);
 };
 
-const currentGameState = new Object();
-export const createGameLink = (req: Request, resp: Response) => {
-  const { randomUUID } = new ShortUniqueId({ length: 8 });
-
-  const selectedGameID = req.params.id;
-  const selectedGame = games.find(({ id }) => id === selectedGameID);
-  const sessionID = randomUUID();
-  currentGameState[sessionID] = selectedGame.name;
-  currentGameState[
-    'link'
-  ] = `http://localhost:3333/api/v1/games/${selectedGameID}/session/${sessionID}`;
-
-  resp.json(currentGameState['link']);
-};
-
-export const instanceOfGame = (req: Request, resp: Response) => {
-  const gameSessionID = req.params.sessionID;
-
-  resp.status(200).json(currentGameState[gameSessionID]);
-};

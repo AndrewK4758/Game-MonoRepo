@@ -1,7 +1,7 @@
 import { IGame } from '@aklapper/model';
 import { useLoaderData, useNavigate, Outlet } from 'react-router-dom';
 
-const PreLoaded = () => {
+const GamesList = () => {
   const games = useLoaderData() as IGame[];
   const nav = useNavigate();
 
@@ -31,4 +31,4 @@ const PreLoaded = () => {
   );
 };
 
-export default PreLoaded;
+export default GamesList;

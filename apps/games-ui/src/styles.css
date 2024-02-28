@@ -103,24 +103,29 @@ html body #root{
 }
 
 .game-details-ul {
-  padding-left: 260px;
-  list-style-type: square;
+  padding-left: 240px;
   margin: 20px 0 5px 0;
 }
 
 .game-details-li-div {
   padding-left: 20px;
+  list-style-type: square;
 }
 
 .game-details-title {
   font-size: 1.5em;
   text-decoration: underline;
   margin-bottom: 5px;
+  list-style-type: none;
 }
 
 .game-details-value-div {
   padding-left: 20px;
   font-size: 1.2em;
+}
+
+.game-details-value::marker {
+  font-size: 1.5em;
 }
 
 .footer {

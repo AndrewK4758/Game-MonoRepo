@@ -1,5 +1,7 @@
 // RULE BUILDER
 
+import { ChutesAndLadders } from './chutes_and_ladders/chutes_and_ladders';
+
 export interface IRule {
   order: number;
   title?: string;
@@ -102,3 +104,39 @@ export class GameBuilder implements IGameBuilder {
     return gameBuildComplete;
   }
 }
+
+//------------------------------------------------------------------------------------------------------------------
+// Game instance map
+
+export interface IInstanceOfGame {
+  game: ChutesAndLadders;
+  instanceTime: number;
+  lastActive: number;
+  updateLastActive(): void;
+}
+
+const date = new Date();
+const getCurrentMinute = () => date.getHours() * 60 + date.getMinutes();
+
+export class InstanceOfGame implements IInstanceOfGame {
+  game: ChutesAndLadders;
+  instanceTime: number;
+  lastActive: number;
+  constructor() {
+    this.game = new ChutesAndLadders(5, 5);
+    this.instanceTime = getCurrentMinute();
+    this.lastActive = this.instanceTime;
+  }
+
+  updateLastActive(): void {
+    // GET THE CURRENT MINUTE OF THE DAY
+    this.lastActive = getCurrentMinute();
+  }
+}
+
+//----------------------------------------------------------------------------------
+// Instance Map of games made in what minute
+
+
+
+

@@ -1,5 +1,6 @@
 import { useLoaderData } from 'react-router-dom';
 import { IGame } from '@aklapper/model';
+import PlayGame from './play_game';
 
 const GameDetails = () => {
   const gameDetails = useLoaderData() as IGame;
@@ -17,6 +18,7 @@ const GameDetails = () => {
           </div>
         ))}
       </ul>
+      <PlayGame />
     </div>
   );
 };

@@ -16,4 +16,12 @@ const getGameDetails: LoaderFunction = async ({ params }: LoaderParam) => {
   return res.data;
 };
 
-export { getGameList, getGameDetails };
+const getGameInstance: LoaderFunction = async () => {
+  const res = await axios.get(
+    'http://localhost:3333/api/v1/games/:id/instances'
+  );
+  console.log(res.data);
+  return res.data;
+};
+
+export { getGameList, getGameDetails, getGameInstance };
