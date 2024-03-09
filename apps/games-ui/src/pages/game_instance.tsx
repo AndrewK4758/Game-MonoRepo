@@ -1,46 +1,27 @@
-import { useLoaderData } from 'react-router-dom';
-
-interface IInstanceOfGameClient {
-  game: string[][];
-  activeGameID: string;
-  instanceTime: number;
-  lastActive: number;
-}
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const GameInstance = () => {
-  const gameData = useLoaderData() as IInstanceOfGameClient;
-  console.log(gameData.game);
+  const location = useLocation();
+  const nav = useNavigate();
 
-  const X = () => {
-    return gameData.game.map((row, idx) => {
-      return (
-        <div
-          style={{
-            height: '100%',
-            display: 'flex',
-            justifyContent: 'space-evenly',
-            width: '100%',
-            border: '3px solid white',
-          }}
-          key={idx + 500}
-        >
-          {row.map((space, idx) => {
-            return (
-              <div
-                style={{ width: 'fit-content', border: '3px solid red' }}
-                key={idx + 300}
-              >
-                {space}
-              </div>
-            );
-          })}
-        </div>
-      );
-    });
+  const gameInstanceID = location.state.gameID;
+  const pathToShow = location.pathname;
+
+  const handleShowGameBoard = () => {
+    nav(`${gameInstanceID}`);
   };
+
   return (
-    <div style={{ paddingLeft: '220px' }} className="game-instance-container">
-      <X />
+    <div className="game-instance-container">
+      <h1 className="game-instance-title">Click to show board:</h1>
+      <br />
+      <p className="game-instance-click" onClick={handleShowGameBoard}>
+        CLICK TO SHOW BOARD
+      </p>
+      <br />
+      <p className="game-instance-link-title">Link to Share:</p>
+      <br />
+      <p className="game-instance-link">{`http://localhost:4200${pathToShow}/${gameInstanceID}`}</p>
     </div>
   );
 };

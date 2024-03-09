@@ -1,57 +1,85 @@
 import { NextFunction, Request, Response } from 'express';
-import { getCurrentMinute } from './instance_map';
-import { InstanceOfGame } from '@aklapper/model';
+import {
+  InstanceOfGame,
+  Minute,
+  GameID,
+  getCurrentMinute,
+  IInstanceMap,
+  IAllGamesMap,
+  ChutesAndLadders,
+} from '@aklapper/model';
+
 import ShortUniqueId from 'short-unique-id';
-import { X } from '../main';
 
-const instanceOfGame = (req: X, resp: Response, next: NextFunction) => {
-  const instanceMap = req.instanceMap;
+export const populateInstanceMaps = (
+  req: Request,
+  resp: Response,
+  next: NextFunction
+) => {
+  const instanceMap = req.app.get('instanceMap') as IInstanceMap;
+  const allGamesMap = req.app.get('allGamesMap') as IAllGamesMap;
 
-  console.log(instanceMap, 'instance map');
-  const activeGameInstances = new Map<string, InstanceOfGame>();
+  const minute: Minute = getCurrentMinute();
+  const gameID: GameID = new ShortUniqueId().rnd();
+  const activeInstance = new InstanceOfGame(
+    minute,
+    gameID,
+    new ChutesAndLadders(5, 5)
+  );
+  allGamesMap.addGame(gameID, activeInstance);
 
-  const game = new InstanceOfGame();
-  const gameID = new ShortUniqueId().rnd();
+  instanceMap.addGameInstance(minute, gameID);
 
-  // const minute = getCurrentMinute();
+  req.app.set('gameID', gameID);
 
-  activeGameInstances.set(gameID, game);
-
-  req.params.game = gameID;
-  console.log(req.params);
-  // const p1 = game.game.registerPlayer('ak');
-  // game.game.registerAvatar(
-  //   p1,
-  //   game.game.avatarList[1].name,
-  //   game.game.colorList.BLACK
-  // );
-
-  // const p2 = game.game.registerPlayer('ak');
-  // game.game.registerAvatar(
-  //   p2,
-  //   game.game.avatarList[2].name,
-  //   game.game.colorList.RED
-  // );
-
-  // game.game.setOrderAndStart();
-
-  // game.game.takeTurn();
-  // game.game.takeTurn();
-  // game.game.takeTurn();
-  // game.game.takeTurn();
-  // game.game.takeTurn();
-
-  const dataToSend = {
-    game: game.game.displayGameBoard(),
-    activeGameID: gameID,
-    instanceTime: game.instanceTime,
-    lastActive: game.lastActive,
-  };
-
-  // GameInstanceMap.instanceMap.forEach((e) => console.log(e));
-  // console.log(minute);
-
-  resp.send(dataToSend);
+  resp.status(200).redirect('/api/v1/games/:id/play');
   next();
 };
-export { instanceOfGame };
+
+export const sendCreatedGameID = (
+  req: Request,
+  resp: Response,
+  next: NextFunction
+) => {
+  const gameID = req.app.get('gameID');
+
+  const gameIDtoSend = {
+    gameID: gameID,
+  };
+
+  resp.status(200).send(gameIDtoSend);
+
+  next();
+};
+
+export const specificGameFunctionality = (
+  req: Request,
+  resp: Response,
+  next: NextFunction
+) => {
+  const allGamesMap = req.app.get('allGamesMap') as IAllGamesMap;
+  const gameID = req.params.gameID;
+
+  const activeGame = allGamesMap.AllGames.get(gameID);
+  if (activeGame) {
+    const gameDataToSend = {
+      game: activeGame.instance.displayGameBoard(),
+    };
+
+    resp.status(200).send(gameDataToSend);
+    next();
+  } else {
+    console.log('not found');
+    resp.status(404).redirect('/api/v1/error');
+    next();
+  }
+};
+
+export const sendError = (res: Request, resp: Response) => {
+  const error = {
+    message: 'GAME IS NOT FOUND. PLEASE START A NEW GAME TO CONTINUE',
+  };
+
+  console.log(error);
+  resp.send(error);
+};

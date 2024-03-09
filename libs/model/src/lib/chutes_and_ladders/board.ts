@@ -3,23 +3,24 @@ import { IBoard, ISpace } from './interfaces';
 export class Board implements IBoard {
   TotalSpaces: number;
   SpaceMaker;
-  SpecialValuesMaker;
+  SpecialValueMaker;
   ConnectSpecials;
+
   constructor(
     totalSpaces: number,
     spaceMaker: (indexOfSpace: number) => ISpace,
-    specialValuesMaker: (min?: number, max?: number) => void | Set<number>,
+    specialValueMaker: () => Set<number> | void,
     connectSpecials: () => void
   ) {
     this.TotalSpaces = totalSpaces;
     this.SpaceMaker = spaceMaker;
-    this.SpecialValuesMaker = specialValuesMaker;
     this.ConnectSpecials = connectSpecials;
+    this.SpecialValueMaker = specialValueMaker;
     this.boardSetup();
   }
 
   boardSetup() {
-    this.SpecialValuesMaker();
+    const specialVals = this.SpecialValueMaker();
     let space = this.SpaceMaker(this.TotalSpaces);
     for (
       let indexOfSpace = this.TotalSpaces - 1;
@@ -31,6 +32,7 @@ export class Board implements IBoard {
       space = space.previous;
     }
     this.ConnectSpecials();
+    if (specialVals) specialVals.clear();
     return space;
   }
 }

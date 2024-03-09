@@ -1,14 +1,12 @@
 import { Request, Response } from 'express';
 import { GameBuilder, IGame } from '@aklapper/model';
 
-
-
 const gb = new GameBuilder();
 
 export const games: IGame[] = [
   gb
     .seId('0')
-    .setName('Chutes & Ladders')
+    .setName('Chutes-&-Ladders')
     .setDescription('First Game')
     .setImageURL(
       'https://i5.walmartimages.com/seo/Chutes-and-Ladders-Classic-Family-Board-Game-Games-for-Kids-Ages-3-and-up_e83d9bc1-a04d-4723-ad1b-4daeb60e771d.488d547f15eb7306b725e33010714f96.jpeg?odnHeight=117&odnWidth=117&odnBg=FFFFFF'
@@ -35,7 +33,7 @@ export const games: IGame[] = [
 
   gb
     .seId('1')
-    .setName('Tic Tac Toe')
+    .setName('Tic-Tac-Toe')
     .setDescription('Second Game Placeholder')
     .setImageURL(
       'https://i5.walmartimages.com/seo/Tic-Tac-Toe-Game-Board-Classic-Board-Game-for-Giant-Connect-4-game-Indoor-Family-Toys-Set-for-Children-Adults-Coffee-Table-Home-Decor-5-9-X-5-9_23cdb90e-3ee1-47dd-87d5-f78e1705dd62.0d3cb2b5ad725ac5992e2dbc33c07dbe.jpeg?odnHeight=640&odnWidth=640&odnBg=FFFFFF'
@@ -54,20 +52,21 @@ export const games: IGame[] = [
     .build(),
 ];
 
-export const gameList = (req: Request, resp: Response) => {
-  const gameNamesAndIDs = games.map(
-    (game) => new Object({ id: game.id, name: game.name })
+export const sendGameList = (req: Request, resp: Response) => {
+  const gamesNameAndIdArr = games.map(
+    (game) =>
+      new Object({ name: game.name, id: game.id, imageURL: game.imageURL })
   );
-  resp.json(gameNamesAndIDs);
+  resp.status(200).json(gamesNameAndIdArr);
 };
 
-export const gameDetails = (req: Request, resp: Response) => {
-  const selectedGameID = req.params.id;
-  const selectedGame = games.find(({ id }) => id === selectedGameID);
-  const selectedGameNameAndDetails = {
+export const sendGameDetails = (req: Request, resp: Response) => {
+  const selectedGameID = req.params.name;
+  const selectedGame = games.find(({ name }) => name === selectedGameID);
+  const selectedGameDetails = {
     name: selectedGame.name,
     rules: selectedGame.rules,
   };
-  resp.json(selectedGameNameAndDetails);
+  resp.status(200).json(selectedGameDetails);
 };
 

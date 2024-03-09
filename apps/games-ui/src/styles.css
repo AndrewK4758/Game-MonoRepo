@@ -1,27 +1,40 @@
 /* You can add global styles to this file, and also import other style files */
+
+/* RESET */
+
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+     margin: 0;
+     padding: 0;
+     border: 0;
+     font-size: 100%;
+     font: inherit;
+     vertical-align: baseline;
+}
+
+/* RESET */ 
+
 * {
-  background-color: #101010;
   color: #ffd300;
   box-sizing: border-box;
-  padding: 0;
-  margin: 0;
 }
 
 img {
-  width: 200px;
+  width: 150px;
   height: auto;
 }
 
 html body #root{
   height: 100vh;
   width: 100vw;
-  
+  font-family: 'fira code';
 } 
 
 .header {
+  margin-left: 160px;
   text-align: center;
   height: fit-content;
   border-bottom: 1px solid wheat;
+  background-color: #101010;
 }
 
 .nav-bar {
@@ -31,18 +44,26 @@ html body #root{
   height: 100vh;
   width: 160px;
   z-index: 1;
-  border: 5px double wheat;
+  border: 3px solid wheat;
   border-left-color: #101010;
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
-  padding-right: 10px;
+  background-color: #101010;
 }
 
 .nav-list {
-  height: 50%;
+  height: 100%;
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
+  border-right: 5px solid purple;
+  border-top: 5px solid purple;
+  border-bottom: 5px solid purple;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  padding-right: 10px;
+  padding-bottom: 50%;
 }
 
 .nav-li {
@@ -60,28 +81,49 @@ html body #root{
 }
 
 .home {
-  margin: 25px 0 25px 0;
   text-align: center;
+  background-color: #404040;
+  border-bottom: 1px solid wheat;
+  border-top: 5px solid purple;
+  font-size: 2.5rem;
+  font-weight: 600;
+}
+
+.container-for-content {
+  margin-top: 25px;
+  height: calc(100% - 200px);
 }
 
 .home-title {
-  border-bottom: 1px solid wheat;
+  line-height: 100px;
+  height: 100%;
+  border-bottom: 5px solid purple ;
+}
+
+.main-area {
+  height: calc(100vh - 25px);
+  margin-left: 160px; 
+  background-color: #707070;
 }
 
 .games-title {
-  font-size: 2em;
-  padding-left: 220px;
-  text-decoration: underline;
-  margin: 20px 0 5px 0;
+  font-size: 2rem;
+  text-align: center;
 }
 
 .games-ul {
-  list-style-type: square;
-  padding-left: 240px;
+  display: flex;
+  margin: 5%;
+  padding: 2.5%;
+  list-style-type: none;
+  border: 5px solid purple;
+  height: 30rem;
+  justify-content: space-evenly;
+  background-color: #404040;
 }
 
 .games-li-container {
-  padding-left: 40px;
+  text-align: center;
 }
 
 .games-li, .games-li::marker{
@@ -95,28 +137,35 @@ html body #root{
   color: #101010;
 }
 
+.game-details-container, .game-instance-container {
+  margin: 5%;
+  padding: 2.5%;
+}
+
 .game-details-name {
-  margin-top: 20px;
-  padding-left: 220px;
   font-size: 2em;
-  text-decoration: underline;
+ font-weight: 500;
+ background-color:purple;
+  color: #ffd300;
+  text-align: center;
 }
 
 .game-details-ul {
-  padding-left: 240px;
-  margin: 20px 0 5px 0;
+  margin-top: 2.5%;
 }
 
 .game-details-li-div {
-  padding-left: 20px;
+  padding-left: 5%;
   list-style-type: square;
+  margin-top: 5%;
 }
 
 .game-details-title {
   font-size: 1.5em;
-  text-decoration: underline;
   margin-bottom: 5px;
   list-style-type: none;
+  background-color: #404040;
+  width: fit-content;
 }
 
 .game-details-value-div {
@@ -128,10 +177,101 @@ html body #root{
   font-size: 1.5em;
 }
 
-.footer {
+.play-game-button-div {
+  text-align: center;
+  width: 100%;
+  height: fit-content;
+  margin-top: 5%;
+}
+
+.play-game-button {
+  margin: 0 auto;
+  height: 5rem;
+  font-weight: bold;
+  font-size: larger;
+  animation: blink 3s infinite;
+  color: #ffd300;
+  background-color: #404040;
+}
+
+@keyframes blink {
+  0% {
+    color: purple;
+    background-color: hotpink;
+  }
+
+  50% {
+    color: hotpink;
+    background-color: purple;
+  }
+}
+
+@-webkit-keyframes blink {
+  0% {
+    color: purple;
+    background-color: hotpink;
+  }
+
+  50% {
+    color: hotpink;
+    background-color: purple;
+  
+}
+}
+
+.game-instance-title, .game-instance-link-title {
+  font-size: 2rem;
+  font-weight: 500;
+  border-bottom: 5px solid purple;
+}
+
+.game-instance-click, .game-instance-link {
+  color: hotpink;
+  background-color: #101010;
+  cursor: pointer;
+  padding: 2.5%;
+  font-size: 1.25rem;
+  height: fit-content;
+  width: fit-content;
+  
+}
+
+.game-instance-click:hover, .game-instance-link:hover {
+  color: #101010;
+  background-color: hotpink;
+}
+
+.game-board-container {
+  border: 10px solid purple;
+  height: 100%;
+  margin: 1%;
+}
+
+.game-board-row {
+  display: flex;
+  text-align: center;
+  height: 10%;
+}
+
+.game-board-space {
+  flex: 1 0 10%;
+  height: 100%;
+  border: 2px solid hotpink;
+  background-color: #404040;
+}
+
+.footer-container {
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
+  background-color: #101010;
+  border-top: 2px solid wheat;
+  margin-left: 160px;
+}
+
+.footer {
   text-align: center;
+  border-top: 3px solid purple;
+  
 }

@@ -166,6 +166,7 @@ export class ChutesAndLadders {
   };
 
   makeGameBoard() {
+    uniqueSpecialValues.clear();
     return new Board(
       TOTAL_SPACES,
       this.spaceMaker,
@@ -194,7 +195,6 @@ export class ChutesAndLadders {
       indexOfSpace++;
       space = space.next;
     }
-
     return gameBoard.reverse();
   }
 

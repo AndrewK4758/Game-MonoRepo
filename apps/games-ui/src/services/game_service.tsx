@@ -11,17 +11,22 @@ interface LoaderParam extends LoaderFunctionArgs {
 }
 
 const getGameDetails: LoaderFunction = async ({ params }: LoaderParam) => {
-  const id = params.id;
-  const res = await axios.get(`http://localhost:3333/api/v1/games/${id}`);
-  return res.data;
+  const name = params.name;
+  const res = await axios.get(`http://localhost:3333/api/v1/games/${name}`);
+  const detailsAndIDtoSend = {
+    name: res.data.name,
+    rules: res.data.rules,
+  };
+  return detailsAndIDtoSend;
 };
 
-const getGameInstance: LoaderFunction = async () => {
+const createGameInstance: LoaderFunction = async ({ params }: LoaderParam) => {
+  const gameID = params.gameID;
+  const name = params.name;
   const res = await axios.get(
-    'http://localhost:3333/api/v1/games/:id/instances'
+    `http://localhost:3333/api/v1/games/${name}/play/${gameID}`
   );
-  console.log(res.data);
-  return res.data;
+  return res;
 };
 
-export { getGameList, getGameDetails, getGameInstance };
+export { getGameList, getGameDetails, createGameInstance };

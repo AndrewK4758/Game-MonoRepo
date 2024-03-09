@@ -5,22 +5,19 @@ const GamesList = () => {
   const games = useLoaderData() as IGame[];
   const nav = useNavigate();
 
-  const handleClick = (e: React.BaseSyntheticEvent) => {
-    const id = e.target.value;
-    nav(`${id}`);
+  const handleClick = (g: IGame) => {
+    const name = g.name;
+    nav(`${name}`);
   };
 
   return (
     <div className="games-list">
-      <h2 className="games-title">Games</h2>
+      <h2 className="games-title">Games - Thanks Walmart for the pics</h2>
       <ul className="games-ul">
         {games.map((g) => (
-          <div className="games-li-container" key={g.id}>
-            <li
-              className="games-li"
-              value={g.id}
-              onClick={(e) => handleClick(e)}
-            >
+          <div className="games-li-container" key={g.name}>
+            <img src={g.imageURL} alt="game pic" />
+            <li className="games-li" onClick={() => handleClick(g as IGame)}>
               {g.name}
             </li>
           </div>

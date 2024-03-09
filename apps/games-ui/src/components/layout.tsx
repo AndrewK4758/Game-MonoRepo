@@ -35,18 +35,20 @@ export default function Layout({ children }: LayoutRouteProps) {
 
   const Footer = () => {
     return (
-      <footer className="footer">
-        <p className="footer">&copy; {new Date().getFullYear()}</p>
-      </footer>
+      <div className="footer-container">
+        <footer className="footer">
+          <p className="footer">&copy; {new Date().getFullYear()}</p>
+        </footer>
+      </div>
     );
   };
 
   return (
-    <div className="layout">
+    <>
       <Header />
       <NavBar />
       <main className="main-area">{children}</main>
       <Footer />
-    </div>
+    </>
   );
 }

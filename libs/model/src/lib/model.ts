@@ -1,4 +1,4 @@
-// RULE BUILDER
+// RULE BUILDER;
 
 import { ChutesAndLadders } from './chutes_and_ladders/chutes_and_ladders';
 
@@ -105,38 +105,85 @@ export class GameBuilder implements IGameBuilder {
   }
 }
 
+//-------------------------------------------------------------------------------------------------------------------
+// Minute, GameID, String of GameID types and getCurrentMinute function
+
+export type Minute = number;
+
+export type GameID = string;
+
+export type GamesInMinute = string[];
+
+export const getCurrentMinute = (): Minute =>
+  (new Date().getHours() * 60 + new Date().getMinutes()) as Minute;
+
 //------------------------------------------------------------------------------------------------------------------
 // Game instance map
 
 export interface IInstanceOfGame {
-  game: ChutesAndLadders;
-  instanceTime: number;
-  lastActive: number;
-  updateLastActive(): void;
+  gameID: GameID;
+  instanceTime: Minute;
+  lastActive: Minute;
+  instance: ChutesAndLadders;
+  updateLastActive(minute: Minute): void;
 }
 
-const date = new Date();
-const getCurrentMinute = () => date.getHours() * 60 + date.getMinutes();
-
 export class InstanceOfGame implements IInstanceOfGame {
-  game: ChutesAndLadders;
-  instanceTime: number;
-  lastActive: number;
-  constructor() {
-    this.game = new ChutesAndLadders(5, 5);
-    this.instanceTime = getCurrentMinute();
-    this.lastActive = this.instanceTime;
+  gameID: GameID;
+  instanceTime: Minute;
+  lastActive: Minute;
+  instance: ChutesAndLadders;
+  constructor(minute: Minute, gameID: GameID, instance: ChutesAndLadders) {
+    this.instanceTime = minute;
+    this.lastActive = minute;
+    this.gameID = gameID;
+    this.instance = instance;
   }
 
-  updateLastActive(): void {
+  updateLastActive(minute: Minute): void {
     // GET THE CURRENT MINUTE OF THE DAY
-    this.lastActive = getCurrentMinute();
+    this.lastActive = minute;
   }
 }
 
 //----------------------------------------------------------------------------------
-// Instance Map of games made in what minute
+// Map of all active games
 
+export interface IAllGamesMap {
+  AllGames: Map<GameID, InstanceOfGame>;
+  addGame(gameID: GameID, game: InstanceOfGame): void;
+}
 
+export class AllGamesMap implements IAllGamesMap {
+  AllGames: Map<GameID, InstanceOfGame>;
+  constructor() {
+    this.AllGames = new Map<GameID, InstanceOfGame>();
+  }
 
+  addGame(gameID: GameID, game: InstanceOfGame) {
+    this.AllGames.set(gameID, game);
+  }
+}
 
+//-----------------------------------------------------------------------------------
+// Map of all game instances in what minute
+
+export interface IInstanceMap {
+  Map: Map<Minute, GamesInMinute>;
+  addGameInstance(minute: Minute, gameID: GameID): void;
+}
+
+export class InstanceMap implements IInstanceMap {
+  Map: Map<Minute, GamesInMinute>;
+  constructor() {
+    this.Map = new Map<Minute, GamesInMinute>();
+    for (let i = 0; i < 24 * 60; i++) {
+      this.Map.set(i, []);
+    }
+    this.Map.set(2000, []);
+  }
+
+  addGameInstance(minute: Minute, gameID: GameID): void {
+    this.Map.get(minute)?.push(gameID);
+  }
+}
