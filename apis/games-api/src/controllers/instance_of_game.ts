@@ -11,6 +11,9 @@ import {
 
 import ShortUniqueId from 'short-unique-id';
 
+
+//-------------------------------------------------------------------------
+
 export const populateInstanceMaps = (
   req: Request,
   resp: Response,
@@ -36,6 +39,9 @@ export const populateInstanceMaps = (
   next();
 };
 
+
+//--------------------------------------------------------------------------
+// redirect from ^ is to this endpoint.
 export const sendCreatedGameID = (
   req: Request,
   resp: Response,
@@ -51,6 +57,12 @@ export const sendCreatedGameID = (
 
   next();
 };
+
+//------------------------------------------------------------------------------
+//just sends game board for now but I can get all functionality of game by using
+// activeGame.instance.registerPlayer()
+// activeGame.instance.registerAvatar() ... and any other method on the game
+
 
 export const specificGameFunctionality = (
   req: Request,
