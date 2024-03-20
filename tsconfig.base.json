@@ -15,6 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@aklapper/ChutesAndLadders": ["libs/chutes_and_ladders/src/index.ts"],
       "@aklapper/model": ["libs/model/src/index.ts"]
     }
   },

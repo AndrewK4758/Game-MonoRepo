@@ -1,23 +1,27 @@
 export enum Color {
-  UNDEFINED = 0,
-  RED = 1,
-  BLACK = 2,
-  BROWN = 3,
-  BLUE = 4,
-  GREEN = 5,
-  PURPLE = 6,
-  WHITE = 7,
-  YELLOW = 8,
-  ORANGE = 9,
-  PINK = 10,
+  RED = 'Red',
+  WHITE = 'White',
+  BLUE = 'Blue',
+  GREEN = 'Green',
+  PURPLE = 'Purple',
+  YELLOW = 'Yellow',
+  ORANGE = 'Orange',
+  PINK = 'Pink',
+  BLACK = 'Black',
+  BROWN = 'Brown',
 }
 
-export const enum SpaceType {
+export enum SpaceType {
   START = 0,
   NORMAL = 1,
   CHUTE = 2,
   LADDER = 3,
   FINISH = 4,
+}
+
+export interface IAvatarList {
+  id: number;
+  name: string;
 }
 
 export interface IPlayer {
@@ -30,6 +34,7 @@ export interface IPlayer {
 
 export interface IAvatar {
   get name(): string;
+  get color(): Color;
   get location(): ISpace;
   set location(location: ISpace);
   move(numberOfSpaces: number): void;
@@ -54,7 +59,7 @@ export interface ISpace {
 }
 
 export interface IBoard {
-  boardSetup(): ISpace;
+  boardSetup(): void;
 }
 
 export interface IDie {

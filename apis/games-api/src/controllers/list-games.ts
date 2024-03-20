@@ -1,4 +1,3 @@
-import { Request, Response } from 'express';
 import { GameBuilder, IGame } from '@aklapper/model';
 
 const gb = new GameBuilder();
@@ -51,22 +50,3 @@ export const games: IGame[] = [
     )
     .build(),
 ];
-
-export const sendGameList = (req: Request, resp: Response) => {
-  const gamesNameAndIdArr = games.map(
-    (game) =>
-      new Object({ name: game.name, id: game.id, imageURL: game.imageURL })
-  );
-  resp.status(200).json(gamesNameAndIdArr);
-};
-
-export const sendGameDetails = (req: Request, resp: Response) => {
-  const selectedGameID = req.params.name;
-  const selectedGame = games.find(({ name }) => name === selectedGameID);
-  const selectedGameDetails = {
-    name: selectedGame.name,
-    rules: selectedGame.rules,
-  };
-  resp.status(200).json(selectedGameDetails);
-};
-

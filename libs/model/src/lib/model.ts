@@ -1,6 +1,10 @@
-// RULE BUILDER;
+// ASK ABOUT DIRECTORY STRUCTURE BEST PRACTICE
 
-import { ChutesAndLadders } from './chutes_and_ladders/chutes_and_ladders';
+import {
+  IAvatarList,
+  ChutesAndLadders,
+  Color,
+} from '@aklapper/ChutesAndLadders';
 
 export interface IRule {
   order: number;
@@ -106,13 +110,13 @@ export class GameBuilder implements IGameBuilder {
 }
 
 //-------------------------------------------------------------------------------------------------------------------
-// Minute, GameID, String of GameID types and getCurrentMinute function
+// Type declarations
 
 export type Minute = number;
 
 export type GameID = string;
 
-export type GamesInMinute = string[];
+export type GamesInMinute = GameID[];
 
 export const getCurrentMinute = (): Minute =>
   (new Date().getHours() * 60 + new Date().getMinutes()) as Minute;
@@ -186,4 +190,33 @@ export class InstanceMap implements IInstanceMap {
   addGameInstance(minute: Minute, gameID: GameID): void {
     this.Map.get(minute)?.push(gameID);
   }
+}
+
+export const reaper = (instanceMap: IInstanceMap) => {
+  const now = new Date();
+  const startTime = new Date(now.getTime() + 24 * 60 * 60 * 1000);
+
+  setTimeout(() => {
+    let previousDay = instanceMap.Map.get(2000);
+    previousDay = [];
+
+    setInterval(() => {
+      const minute = getCurrentMinute();
+      let valsToMove = instanceMap.Map.get(minute);
+      if (valsToMove) {
+        previousDay.push(...valsToMove);
+        valsToMove = [];
+      }
+    }, 60 * 1000);
+  }, startTime.getTime() - now.getTime());
+};
+
+// console.log(reaper())
+//--------------------------------------------------------------------------------------------------------
+//ReturnGameFunctionallityLoaderData interface
+
+export interface RegisterAndPlayData {
+  gameID: string;
+  avatarList: IAvatarList[];
+  avatarColorList: Color;
 }

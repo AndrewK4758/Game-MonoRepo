@@ -6,6 +6,8 @@ import { SpaceType, Color, ISpace, IPlayer } from './interfaces';
 import { Die } from './die';
 import { rangeSelector, generateRandomNumber } from './utils';
 
+export type GameBoard = string[][];
+
 const TOTAL_SPACES = 100;
 const START = 1;
 const ROWS: number = Math.ceil(TOTAL_SPACES / Math.sqrt(TOTAL_SPACES));
@@ -141,7 +143,6 @@ export class ChutesAndLadders {
     this.playerInTurn;
     this.player;
     this.avatarList = [
-      { id: 0, name: '' },
       { id: 1, name: 'XENOMORPH' },
       { id: 2, name: 'PREDATOR' },
       { id: 3, name: 'TERMINATOR' },
@@ -149,7 +150,7 @@ export class ChutesAndLadders {
     ];
   }
 
-  spaceMaker = (indexOfSpace: number) => {
+  spaceMaker = (indexOfSpace: number): ISpace => {
     let space: ISpace;
     if (indexOfSpace === TOTAL_SPACES) {
       space = new Space(SpaceType.FINISH, 'Finish');
@@ -175,7 +176,7 @@ export class ChutesAndLadders {
     );
   }
 
-  displayGameBoard() {
+  displayGameBoard(): GameBoard {
     let space = this.startSpace;
     let row: string[] = [];
     const gameBoard: string[][] = [];
@@ -201,19 +202,20 @@ export class ChutesAndLadders {
   specialValuesMaker = (
     min: number = minSpecialRangeValue(),
     max: number = TOTAL_SPACES
-  ): Set<number> | void => {
-    if (uniqueSpecialValues.size >= this.CHUTES + this.LADDERS) return;
-    const specialValue = rangeSelector(min, max);
-    if (uniqueSpecialValues.has(specialValue))
-      this.specialValuesMaker(min, max);
-    else {
-      uniqueSpecialValues.add(specialValue);
-      this.specialValuesMaker(min - (ROWS - 1), max - (ROWS - 1));
+  ): Set<number> => {
+    if (uniqueSpecialValues.size < this.CHUTES + this.LADDERS) {
+      const specialValue = rangeSelector(min, max);
+      if (uniqueSpecialValues.has(specialValue))
+        this.specialValuesMaker(min, max);
+      else {
+        uniqueSpecialValues.add(specialValue);
+        this.specialValuesMaker(min - (ROWS - 1), max - (ROWS - 1));
+      }
     }
     return uniqueSpecialValues;
   };
 
-  registerPlayer(name: string) {
+  registerPlayer(name: string): IPlayer {
     this.player = new Player(name);
     this.generatePlayerOrder(this.player);
     return this.player;
@@ -253,7 +255,7 @@ export class ChutesAndLadders {
     this.playerInTurn.avatar.move(moveDist);
     if (this.wonGame(this.playerInTurn.avatar.location.type)) {
       this.haveWinner = true;
-      return alert(`CONGRADULATIONS ${this.playerInTurn.name}... YOU WON!!!!`);
+      return alert(`CONGRATULATIONS ${this.playerInTurn.name}... YOU WON!!!!`);
     } else {
       this.playerInTurn = this.rotatePlayers();
     }
@@ -268,7 +270,7 @@ export class ChutesAndLadders {
   wonGame(locationType: SpaceType) {
     return locationType === SpaceType.FINISH;
   }
-  reset() {
+  reset(): GameBoard {
     uniqueSpecialValues.clear();
     this.makeGameBoard();
     this.playersArray.forEach((player) => {

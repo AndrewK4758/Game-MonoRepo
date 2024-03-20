@@ -1,33 +1,22 @@
-import { ReactNode } from 'react';
-import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import { IGame } from '@aklapper/model';
+import { Form, useLoaderData } from 'react-router-dom';
 
-interface Props {
-  name: ReactNode;
-}
-const PlayGame = ({ name }: Props) => {
-  const nav = useNavigate();
+const PlayGame = () => {
+  const loader = useLoaderData() as IGame;
 
-  const handlePlayGame = async () => {
-    try {
-      const res = await axios.post(
-        `http://localhost:3333/api/v1/games/${name}`
-      );
-      const gameID = res.data.gameID;
-      nav(`play`, {
-        state: {
-          gameID: gameID,
-        },
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const name = loader.name;
   return (
     <div className="play-game-button-div">
-      <button className="play-game-button" onClick={handlePlayGame}>
-        PLAY GAME!!
-      </button>
+      <Form method="post" action={`/games/${name}`}>
+        <button
+          className="play-game-button"
+          name="name"
+          value={name}
+          type="submit"
+        >
+          PLAY GAME!!
+        </button>
+      </Form>
     </div>
   );
 };

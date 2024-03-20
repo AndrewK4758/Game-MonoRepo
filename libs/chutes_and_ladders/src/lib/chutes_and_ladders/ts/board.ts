@@ -9,7 +9,7 @@ export class Board implements IBoard {
   constructor(
     totalSpaces: number,
     spaceMaker: (indexOfSpace: number) => ISpace,
-    specialValueMaker: () => Set<number> | void,
+    specialValueMaker: () => Set<number>,
     connectSpecials: () => void
   ) {
     this.TotalSpaces = totalSpaces;
@@ -20,7 +20,7 @@ export class Board implements IBoard {
   }
 
   boardSetup() {
-    const specialVals = this.SpecialValueMaker();
+    this.SpecialValueMaker();
     let space = this.SpaceMaker(this.TotalSpaces);
     for (
       let indexOfSpace = this.TotalSpaces - 1;
@@ -32,7 +32,5 @@ export class Board implements IBoard {
       space = space.previous;
     }
     this.ConnectSpecials();
-    if (specialVals) specialVals.clear();
-    return space;
   }
 }

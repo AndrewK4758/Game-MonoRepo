@@ -1,0 +1,26 @@
+{
+  "name": "ChutesAndLadders",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/chutes_and_ladders/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/chutes_and_ladders",
+        "main": "libs/chutes_and_ladders/src/index.ts",
+        "tsConfig": "libs/chutes_and_ladders/tsconfig.lib.json",
+        "assets": ["libs/chutes_and_ladders/*.md"]
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "libs/chutes_and_ladders/jest.config.ts"
+      }
+    }
+  },
+  "tags": []
+}

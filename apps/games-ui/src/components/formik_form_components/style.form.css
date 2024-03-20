@@ -1,0 +1,31 @@
+.text-input-label-playerName, .select-input-label-avatarName, .select-input-label-avatarColor {
+  font-size: 1.25rem;
+}
+
+.text-input-playerName, .select-input-avatarName, .select-input-avatarColor {
+	margin-top: 1%;
+	width: 50%;
+	height: 35px;
+	font-size: 1.25rem;
+	border-radius: 5px;
+  background-color: hotpink;
+  color: purple;
+}
+
+.text-input-playerName::placeholder {
+  color: purple;
+  font-weight: bold;
+}
+
+.register-form-submit {
+  margin-top: 1%;
+  margin-right: 5rem;
+	font-size: 1.25rem;
+	width: 100px;
+	height: 35px;
+	border-radius: 5px;
+	font-weight: bold;
+	cursor: pointer;
+  color: purple;
+  background-color: hotpink;
+}

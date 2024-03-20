@@ -1,5 +1,5 @@
 import { IGame } from '@aklapper/model';
-import { useLoaderData, useNavigate, Outlet } from 'react-router-dom';
+import { useLoaderData, useNavigate } from 'react-router-dom';
 
 const GamesList = () => {
   const games = useLoaderData() as IGame[];
@@ -23,7 +23,6 @@ const GamesList = () => {
           </div>
         ))}
       </ul>
-      <Outlet />
     </div>
   );
 };
